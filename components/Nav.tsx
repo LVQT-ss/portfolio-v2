@@ -1,14 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { site } from "@/content/site";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
 
 const links = [
   { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "Stack", href: "#stack-wheel" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export default function Nav() {
@@ -47,7 +45,7 @@ export default function Nav() {
           onClick={(e) => smoothScrollTo(e, "#top")}
           className="font-serif text-lg text-gold"
         >
-          {site.shortName}
+          LVQT
         </a>
         <div className="flex items-center gap-4 sm:gap-7">
           {links.map((l) => (
@@ -65,7 +63,7 @@ export default function Nav() {
             onClick={(e) => smoothScrollTo(e, "#contact")}
             className="rounded-md bg-gold px-4 py-1.5 text-xs font-bold tracking-wide text-background uppercase transition-opacity hover:opacity-90"
           >
-            Hire me
+            Contact
           </a>
         </div>
       </nav>

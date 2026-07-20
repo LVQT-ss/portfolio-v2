@@ -1,26 +1,9 @@
 import FadeContent from "@/components/reactbits/FadeContent";
 import ScrollStack from "@/components/reactbits/ScrollStack";
 import { projects, type Project } from "@/content/site";
-import { FiExternalLink, FiImage, FiGitBranch } from "react-icons/fi";
-import { SiDocker, SiCloudflare, SiNginx } from "react-icons/si";
-import type { IconType } from "react-icons";
+import { FiExternalLink, FiImage } from "react-icons/fi";
 
 const isPlaceholder = (s: string) => s.includes("[");
-
-const deployIcons: Record<string, IconType> = {
-  Docker: SiDocker,
-  Cloudflare: SiCloudflare,
-  Nginx: SiNginx,
-  "CI/CD": FiGitBranch,
-};
-
-function Chip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-muted">
-      {children}
-    </span>
-  );
-}
 
 function ProjectMedia({ p }: { p: Project }) {
   if (isPlaceholder(p.media)) {
@@ -36,7 +19,7 @@ function ProjectMedia({ p }: { p: Project }) {
     <img
       src={p.media}
       alt={`${p.name} screenshot`}
-      className="absolute inset-0 size-full object-cover object-top transition-opacity group-hover:opacity-90"
+      className="absolute inset-0 size-full object-cover object-top transition duration-500 group-hover/media:scale-[1.015] group-hover/media:opacity-90"
       loading="lazy"
     />
   );
@@ -49,9 +32,21 @@ function ProjectMedia({ p }: { p: Project }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Open ${p.name} live demo`}
-      className="absolute inset-0 block"
+      className="group/media absolute inset-0 block focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-gold"
     >
       {img}
+      <span
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/15 opacity-80 transition-opacity group-hover/media:opacity-100"
+      />
+      <span className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full border border-gold/35 bg-background/80 px-3 py-1.5 text-[10px] font-semibold tracking-[0.18em] text-gold uppercase shadow-lg backdrop-blur-md sm:top-6 sm:left-6">
+        <span className="size-1.5 rounded-full bg-gold shadow-[0_0_10px_rgba(200,169,110,0.8)]" />
+        Live project
+      </span>
+      <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-xs font-semibold text-background shadow-xl transition-transform group-hover/media:-translate-y-1 sm:right-6 sm:bottom-6 sm:px-5 sm:py-2.5 sm:text-sm">
+        See it in action
+        <FiExternalLink aria-hidden />
+      </span>
     </a>
   );
 }
@@ -69,45 +64,10 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
             <p className="text-sm text-muted">{p.tagline}</p>
           </div>
 
-          {p.role ? (
+          {p.role && (
             <span className="mt-4 inline-block rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold tracking-widest text-gold uppercase">
               {p.role}
             </span>
-          ) : (
-            <>
-              {p.highlights && (
-                <ul className="mt-4 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
-                  {p.highlights.map((h) => (
-                    <li key={h} className="flex items-start gap-2 text-sm leading-snug text-foreground/90">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {p.stack && (
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.stack.map((t) => (
-                    <Chip key={t}>{t}</Chip>
-                  ))}
-                </div>
-              )}
-              {p.deploy && (
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {p.deploy.map((t) => {
-                    const Icon = deployIcons[t];
-                    return (
-                      <Chip key={t}>
-                        <span className="inline-flex items-center gap-1.5">
-                          {Icon && <Icon className="size-3.5" aria-hidden />}
-                          {t}
-                        </span>
-                      </Chip>
-                    );
-                  })}
-                </div>
-              )}
-            </>
           )}
 
           <div className="mt-5">
@@ -120,9 +80,9 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
                 href={p.demoLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-gold hover:underline"
+                className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-background transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
-                <FiExternalLink aria-hidden /> Live demo
+                See it in action <FiExternalLink aria-hidden />
               </a>
             )}
           </div>

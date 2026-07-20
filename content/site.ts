@@ -267,7 +267,7 @@ export const testimonials: Testimonial[] = [
 ];
 
 export const testimonialsFallback =
-  "Do you really need someone who understands your code and hosting, and a friend who sticks around through the tough times? Get in touch now.";
+  "Looking for someone who can take ownership beyond the code? From architecture and development to deployment, fixes, and continuous improvement — I'm here for the whole journey.";
 
 export const contact = {
   title: "Let's build your platform",
