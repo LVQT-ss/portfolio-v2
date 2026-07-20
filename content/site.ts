@@ -9,7 +9,7 @@
 export const site = {
   name: "Quoc Thinh Le Viet",
   shortName: "Quoc Thinh",
-  url: "https://your-domain.vercel.app", // [PRODUCTION_URL] — update after deploy
+  url: "https://portfolio-v2-one-swart.vercel.app",
   email: "levietquocthinh@gmail.com",
   links: {
     github: "https://github.com/LVQT-ss",
