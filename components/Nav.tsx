@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
+import { smoothScrollTo } from "@/lib/smoothScrollTo";
 
 const links = [
-  { label: "Stack", href: "#stack" },
   { label: "Projects", href: "#projects" },
-  { label: "Booking SaaS", href: "#booking" },
+  { label: "About", href: "#about" },
+  { label: "Stack", href: "#stack-wheel" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -41,7 +42,11 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="font-serif text-lg text-gold">
+        <a
+          href="#top"
+          onClick={(e) => smoothScrollTo(e, "#top")}
+          className="font-serif text-lg text-gold"
+        >
           {site.shortName}
         </a>
         <div className="flex items-center gap-4 sm:gap-7">
@@ -49,6 +54,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => smoothScrollTo(e, l.href)}
               className="hidden text-sm text-muted transition-colors hover:text-foreground sm:block"
             >
               {l.label}
@@ -56,7 +62,8 @@ export default function Nav() {
           ))}
           <a
             href="#contact"
-            className="rounded-full bg-gold px-4 py-1.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            onClick={(e) => smoothScrollTo(e, "#contact")}
+            className="rounded-md bg-gold px-4 py-1.5 text-xs font-bold tracking-wide text-background uppercase transition-opacity hover:opacity-90"
           >
             Hire me
           </a>

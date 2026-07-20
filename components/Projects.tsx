@@ -75,6 +75,16 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
             </span>
           ) : (
             <>
+              {p.highlights && (
+                <ul className="mt-4 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+                  {p.highlights.map((h) => (
+                    <li key={h} className="flex items-start gap-2 text-sm leading-snug text-foreground/90">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              )}
               {p.stack && (
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {p.stack.map((t) => (
@@ -124,14 +134,14 @@ function ProjectCard({ p, index }: { p: Project; index: number }) {
 
 export default function Projects() {
   return (
-    <section id="projects" className="border-t border-border/60 py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="font-serif text-3xl text-foreground sm:text-4xl">Projects</h2>
-        <p className="mt-3 max-w-xl text-muted">
+    <section id="projects" className="border-t border-border/60 pt-8 sm:pt-10">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-baseline justify-between gap-x-8 gap-y-1 px-4 sm:px-6">
+        <h2 className="font-serif text-2xl text-foreground sm:text-3xl">Projects</h2>
+        <p className="text-sm text-muted">
           A marketplace shipped to production, a design exploration, and a services platform.
         </p>
       </div>
-      <ScrollStack className="mt-10" topOffset={64} stackGap={0}>
+      <ScrollStack className="mt-4" topOffset={64} stackGap={0}>
         {projects.map((p, i) => (
           <ProjectCard key={p.id} p={p} index={i} />
         ))}

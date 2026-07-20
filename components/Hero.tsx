@@ -1,29 +1,68 @@
 import TextType from "@/components/reactbits/TextType";
+// import TrueFocus from "@/components/reactbits/TrueFocus"; // swapped for RotatingText
+import RotatingText from "@/components/reactbits/RotatingText";
+import LightRays from "@/components/reactbits/LightRays";
 // import HeroFace from "@/components/HeroFace"; // hidden — replaced by the Lanyard card
 // import CircularText from "@/components/reactbits/CircularText"; // hidden for now
 import HeroLanyard from "@/components/HeroLanyard";
-import { hero, site } from "@/content/site";
+import { hero } from "@/content/site";
 
 const isPlaceholder = (s: string) => s.includes("[");
 
 export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden px-4 pt-24 pb-4 sm:px-6 sm:pt-28">
-      {/* subtle gold glow — pure CSS, no runtime cost */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-130 w-200 -translate-x-1/2 rounded-full opacity-20 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, #92400e, transparent)" }}
-      />
+      {/* WebGL light rays background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#92400e"
+          raysSpeed={1.2}
+          lightSpread={0.8}
+          rayLength={1.4}
+          fadeDistance={1.1}
+          saturation={0.9}
+          followMouse
+          mouseInfluence={0.15}
+          noiseAmount={0.05}
+          distortion={0.03}
+          className="opacity-70"
+        />
+      </div>
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
         {/* text column sits above the full-bleed lanyard canvas so links stay clickable */}
         <div className="relative z-10">
-          <h1 className="block font-sans text-6xl leading-[0.9] font-black tracking-tight text-gold uppercase sm:text-7xl">
-            {hero.headline}
+          {/* <h1 className="block font-sans text-6xl leading-[0.9] font-black tracking-tight text-gold uppercase sm:text-7xl">
+            <TrueFocus
+              sentence={hero.headline}
+              separator="-"
+              manualMode={false}
+              blurAmount={4}
+              borderColor="var(--color-gold)"
+              glowColor="var(--color-gold-soft)"
+              animationDuration={0.6}
+              pauseBetweenAnimations={1.2}
+              className="!justify-start !gap-3"
+            />
           </h1>
           <p className="block font-sans text-6xl leading-[0.9] font-black tracking-tight text-foreground uppercase sm:text-7xl">
             {hero.subHeadline}
-          </p>
+          </p> */}
+          <h1 className="flex flex-wrap items-center gap-x-3 gap-y-2 font-sans text-4xl leading-[0.9] font-black tracking-tight text-foreground uppercase sm:text-5xl">
+            <RotatingText
+              texts={hero.roles}
+              mainClassName="max-w-full justify-center overflow-hidden rounded-lg bg-gold px-4 py-1 text-background sm:px-5 sm:py-2"
+              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1"
+              staggerFrom="last"
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "-120%", opacity: 0 }}
+              staggerDuration={0.02}
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2200}
+            />
+            <span>{hero.subHeadline}</span>
+          </h1>
           <TextType
             as="p"
             text={hero.intro}
@@ -33,7 +72,7 @@ export default function Hero() {
             showCursor
             cursorCharacter="|"
             cursorClassName="text-gold"
-            className="mt-6 min-h-44 max-w-2xl text-base leading-relaxed text-muted sm:min-h-40 sm:text-lg"
+            className="mt-6 min-h-16 max-w-2xl text-base leading-relaxed text-muted sm:min-h-14 sm:text-lg"
           />
 
           {!isPlaceholder(hero.stat.value) && (
@@ -43,25 +82,6 @@ export default function Hero() {
             </div>
           )}
 
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href={hero.ctaPrimary.href}
-              className="rounded-md bg-gold px-7 py-3 text-sm font-bold tracking-wide text-background uppercase transition-opacity hover:opacity-90"
-            >
-              {hero.ctaPrimary.label}
-            </a>
-            <a
-              href={hero.ctaSecondary.href}
-              className="rounded-md border border-border px-7 py-3 text-sm font-bold tracking-wide text-foreground uppercase transition-colors hover:border-gold hover:text-gold"
-            >
-              {hero.ctaSecondary.label}
-            </a>
-          </div>
-
-          <p className="mt-6 flex items-center gap-2 text-sm text-muted">
-            <span className="size-2 rounded-full bg-gold" aria-hidden />
-            {hero.availability}
-          </p>
         </div>
 
         {/* on lg+ HeroLanyard renders absolute inset-0 (whole grid = drag area);

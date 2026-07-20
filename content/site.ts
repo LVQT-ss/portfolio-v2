@@ -22,18 +22,71 @@ export const site = {
 export const hero = {
   headline: "Full-Stack",
   subHeadline: "Developer",
+  roles: ["Full-Stack", "Backend", "Frontend", "DevOps & Cloud"],
   // ⚠️ Fill in your real KeyHay traffic number, e.g. "120K organic visits/month".
   // The stat block is hidden until you replace this placeholder.
   stat: {
     value: "[KEYHAY_TRAFFIC_METRIC]",
     label: "organic traffic grown for KeyHay marketplace",
   },
-  intro:
-    "Hi, I’m Quoc Thinh, a Full-Stack Developer with 3+ years of hands-on experience building complete web and mobile products. Across academic, personal, and production projects, I’ve worked through the entire development lifecycle—from shaping ideas and designing systems to implementation, testing, deployment, and continuous improvement.",
+  intro: "I design, build, and ship full-stack products end-to-end — then keep them running in production.",
   availability: "Available for full-time opportunities",
   ctaPrimary: { label: "View projects", href: "#projects" },
   ctaSecondary: { label: "Get in touch", href: "#contact" },
 };
+
+export const about = {
+  bio: "Full-stack Developer with 1+ year of hands-on experience building production-grade web and mobile products — React, Next.js, Angular, Node.js, NestJS, and PostgreSQL. Experienced in REST APIs, real-time features, payment integration, and Agile delivery. Strong in Docker, CI/CD, and cloud deployment. Available for remote international roles (UTC+7, flexible overlap).",
+  education: {
+    school: "FPT University",
+    degree: "Bachelor of Software Engineering",
+    location: "Ho Chi Minh City, Vietnam",
+    period: "2021 – 2025",
+    note: "Project Lead for multiple full-stack academic projects — architecture design, task delegation, and delivery.",
+  },
+};
+
+export type ExperienceEntry = {
+  role: string;
+  company: string;
+  location: string;
+  period: string;
+  highlights: string[];
+};
+
+export const experience: ExperienceEntry[] = [
+  {
+    role: "Fullstack Developer & DevOps Engineer",
+    company: "KeyHay.com — Digital Goods Marketplace (Solo Builder)",
+    location: "Ho Chi Minh City, Vietnam (Remote)",
+    period: "Nov 2025 – Present",
+    highlights: [
+      "Architected the core REST API with NestJS + PostgreSQL; dual-layer caching (Redis + IndexedDB) cut direct DB queries by 80% and keeps API responses under 100ms",
+      "Built a high-performance Next.js 15 (SSR) frontend with i18n, reaching a 100 PageSpeed score",
+      "Owns the full cloud stack — Cloudflare WAF/DNS/R2, Linux VPS via Tunnel, Docker, and automated GitHub Actions CI/CD",
+    ],
+  },
+  {
+    role: "Full-stack Developer",
+    company: "Nudi Limited — Healthcare Management System (beta.nudi.vn)",
+    location: "Ho Chi Minh City, Vietnam",
+    period: "Dec 2025 – Present",
+    highlights: [
+      "Maintains a cross-platform healthcare app on Angular + Ionic with a scalable ASP.NET Zero backend",
+      "Built a real-time expert–client messaging system with SignalR, Angular Signals, and RxJS — unread sync, pinned conversations, resilient reconnects",
+    ],
+  },
+  {
+    role: "Front-end Developer Intern",
+    company: "Amazing Tech — Applicant Tracking System",
+    location: "Ho Chi Minh City, Vietnam",
+    period: "Jul 2023 – Oct 2024",
+    highlights: [
+      "Built the internal ATS frontend in React — candidate grids, HR approval workflows, protected routes and role-based access",
+      "Delivered pixel-accurate UI from Figma specs, tracked in Trello under a Waterfall process",
+    ],
+  },
+];
 
 export const techStack: { group: string; items: { name: string; icon: string }[] }[] = [
   {
@@ -141,6 +194,8 @@ export type Project = {
   role?: string;
   stack?: string[];
   deploy?: string[];
+  /** What you actually built — the engineering depth a screenshot can't show. */
+  highlights?: string[];
   demoLink: string; // [DEMO_LINK] or a real URL
 };
 
@@ -152,6 +207,14 @@ export const projects: Project[] = [
     media: "/images/keyhay.png",
     stack: ["Next.js", "NestJS", "PostgreSQL", "Redis", "vLLM", "Qwen2.5-72B"],
     deploy: ["Docker", "Cloudflare", "CI/CD", "Nginx"],
+    highlights: [
+      "Built and shipped solo, end-to-end: architecture, backend, frontend, deployment, and ongoing ops",
+      "RBAC-secured admin dashboard for orders, inventory, and user management",
+      "Dual-layer Redis caching keeping API latency under 100ms on the top-up flow",
+      "Dynamic auto-ban rate-limiting against DDoS/spam via Redis + Cloudflare WAF",
+      "Real-time transaction pipeline with Socket.IO and BullMQ event queues",
+      "Automated CI/CD — GitHub Actions builds, Dockerizes, and deploys to production with zero manual steps",
+    ],
     demoLink: "https://keyhay.com",
   },
   {
@@ -194,7 +257,7 @@ export type Testimonial = {
 };
 
 /** Replace with real testimonials. While every entry still contains
- *  [BRACKETS], the section renders a tasteful "references available" note instead. */
+ *  [BRACKETS], the section renders a scroll-reveal pitch instead. */
 export const testimonials: Testimonial[] = [
   {
     quote: "[TESTIMONIAL_QUOTE]",
@@ -202,6 +265,9 @@ export const testimonials: Testimonial[] = [
     role: "[CLIENT_ROLE_COMPANY]",
   },
 ];
+
+export const testimonialsFallback =
+  "Do you really need someone who understands your code and hosting, and a friend who sticks around through the tough times? Get in touch now.";
 
 export const contact = {
   title: "Let's build your platform",
