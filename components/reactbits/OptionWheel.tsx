@@ -35,6 +35,13 @@ type OptionWheelProps = {
    *  larger surrounding section (e.g. both wheel and a side panel) drive the wheel
    *  and only release scroll to the page once the first/last option is reached. */
   scopeRef?: React.RefObject<HTMLElement | null>;
+  /** Controlled mode: continuous wheel position (e.g. derived from page scroll
+   *  progress). When set, the wheel stops trapping wheel/drag events itself and
+   *  simply eases toward this value. */
+  position?: number | null;
+  /** Controlled mode: called when the user clicks an option or uses arrow keys —
+   *  the parent decides how to move (e.g. scroll the page to that step). */
+  onRequestIndex?: (index: number) => void;
 };
 
 type WheelConfig = {
@@ -76,7 +83,10 @@ export default function OptionWheel({
   soundVolume = 0.5,
   className = "",
   scopeRef,
+  position = null,
+  onRequestIndex,
 }: OptionWheelProps) {
+  const controlled = position != null;
   const rootRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const posRef = useRef(defaultSelected);
@@ -219,7 +229,13 @@ export default function OptionWheel({
     [startLoop, playTick]
   );
 
+  // controlled mode: ease toward the externally driven position
   useEffect(() => {
+    if (position != null) applyTarget(position, false);
+  }, [position, applyTarget]);
+
+  useEffect(() => {
+    if (controlled) return; // page scroll drives the wheel — don't trap events
     const el = scopeRef?.current ?? rootRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
@@ -242,9 +258,15 @@ export default function OptionWheel({
       el.removeEventListener("wheel", onWheel);
       if (wheelTimerRef.current) clearTimeout(wheelTimerRef.current);
     };
-  }, [applyTarget, scopeRef]);
+  }, [applyTarget, scopeRef, controlled]);
+
+  const controlledRef = useRef(controlled);
+  controlledRef.current = controlled;
+  const onRequestIndexRef = useRef(onRequestIndex);
+  onRequestIndexRef.current = onRequestIndex;
 
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (controlledRef.current) return;
     if (!cfgRef.current.draggable) return;
     dragRef.current = { y: e.clientY, start: targetRef.current, id: e.pointerId };
     dragMovedRef.current = false;
@@ -275,6 +297,10 @@ export default function OptionWheel({
   const handleItemClick = useCallback(
     (index: number) => {
       if (dragMovedRef.current) return;
+      if (controlledRef.current) {
+        onRequestIndexRef.current?.(index);
+        return;
+      }
       const cfg = cfgRef.current;
       const cur = targetRef.current;
       let d = index - (((cur % cfg.count) + cfg.count) % cfg.count);
@@ -294,6 +320,12 @@ export default function OptionWheel({
       else if (e.key === "ArrowDown" || e.key === "ArrowRight") delta = 1;
       if (delta == null) return;
       e.preventDefault();
+      if (controlledRef.current) {
+        const cfg = cfgRef.current;
+        const next = Math.min(Math.max(Math.round(targetRef.current) + delta, 0), cfg.count - 1);
+        onRequestIndexRef.current?.(next);
+        return;
+      }
       applyTarget(Math.round(targetRef.current) + delta, true);
     },
     [applyTarget]
