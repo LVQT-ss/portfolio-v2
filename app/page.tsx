@@ -1,8 +1,8 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Approach from "@/components/Approach";
 import TechStack from "@/components/TechStack";
-import CaseStudies from "@/components/CaseStudies";
+import Projects from "@/components/Projects";
+import TechStackWheel from "@/components/TechStackWheel";
 import BookingFocus from "@/components/BookingFocus";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
@@ -14,9 +14,9 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Approach />
         <TechStack />
-        <CaseStudies />
+        <Projects />
+        <TechStackWheel />
         <BookingFocus />
         <Testimonials />
         <Contact />

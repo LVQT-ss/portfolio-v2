@@ -16,7 +16,7 @@ type SpotlightCardProps = {
 export default function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(200, 169, 110, 0.14)",
+  spotlightColor = "rgba(146, 64, 14, 0.12)",
 }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 

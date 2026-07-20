@@ -16,20 +16,20 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#0b0b10",
-          color: "#ececf1",
+          background: "#ffffff",
+          color: "#1c1b18",
           fontFamily: "serif",
         }}
       >
-        <div style={{ fontSize: 28, color: "#c8a96e", letterSpacing: 4, textTransform: "uppercase" }}>
+        <div style={{ fontSize: 28, color: "#92400e", letterSpacing: 4, textTransform: "uppercase" }}>
           {site.name}
         </div>
         <div style={{ fontSize: 64, marginTop: 24, lineHeight: 1.15, maxWidth: 1000 }}>
           {hero.headline}
         </div>
-        <div style={{ fontSize: 64, color: "#c8a96e", lineHeight: 1.15 }}>{hero.subHeadline}</div>
-        <div style={{ fontSize: 26, marginTop: 32, color: "#9c9ca8" }}>
-          NestJS · Next.js · PostgreSQL · Redis · Docker · React Native
+        <div style={{ fontSize: 64, color: "#92400e", lineHeight: 1.15 }}>{hero.subHeadline}</div>
+        <div style={{ fontSize: 26, marginTop: 32, color: "#6b675e" }}>
+          Software Engineer ✦ DevOps Engineer ✦ Debugger
         </div>
       </div>
     ),
